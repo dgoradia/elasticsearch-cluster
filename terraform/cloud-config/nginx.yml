@@ -1,0 +1,24 @@
+#cloud-config
+packages:
+  - build-essential
+  - git
+write_files:
+  - path: '/etc/chef/client.rb'
+    permission: "0644"
+    owner: "root"
+    content: |
+      log_location      STDOUT
+      local_mode        true
+      chef_zero.enabled true
+      cookbook_path     File.expand_path('/etc/chef/cookbooks')
+runcmd:
+  - export HOME=/root
+  - mkdir -p /etc/chef/cookbooks
+  - curl -L https://omnitruck.chef.io/install.sh | sudo bash
+  - git clone https://github.com/dgoradia/fd-elasticsearch.git /etc/chef/cookbooks/fd-elasticsearch
+  - export PATH="/opt/chef/embedded/bin:$PATH"
+  - cd /etc/chef/cookbooks/fd-elasticsearch
+  - bundle install
+  - berks vendor
+  - mv /etc/chef/cookbooks/fd-elasticsearch/berks-cookbooks/* /etc/chef/cookbooks
+  - chef-client -r fender-elasticsearch::nginx

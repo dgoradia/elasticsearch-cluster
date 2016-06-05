@@ -1,0 +1,11 @@
+name 'fender-elasticsearch'
+maintainer 'Dru Goradia'
+maintainer_email 'dgoradia@users.noreply.github.com'
+license 'all_rights'
+description 'Installs/Configures fender-elasticsearch'
+long_description 'Installs/Configures fender-elasticsearch'
+version '0.1.0'
+
+depends 'java', '~> 1.39.0'
+depends 'elasticsearch', '~> 2.3.1'
+depends 'apt'

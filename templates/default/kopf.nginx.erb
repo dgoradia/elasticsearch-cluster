@@ -1,0 +1,27 @@
+upstream elasticsearch {
+  server <%= @proxy_host %>:<%= @proxy_port %>;
+  keepalive 15;
+}
+
+server {
+  listen <%= @listen %>;
+  auth_basic "Authentication Required";
+  auth_basic_user_file passwd;
+
+  location / {
+    proxy_pass http://elasticsearch;
+    rewrite ^<%= @es_root_path %>(.*) /$1 break;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "Keep-Alive";
+    proxy_set_header Proxy-Connection "Keep-Alive";
+  }
+
+  location ~ ^/kopf/.*$ {
+    proxy_pass http://elasticsearch;
+    rewrite ^/kopf/(.*) /_plugin/kopf/$1 break;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "Keep-Alive";
+    proxy_set_header Proxy-Connection "Keep-Alive";
+  }
+
+}
