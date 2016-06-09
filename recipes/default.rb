@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: fender-elasticsearch
+# Cookbook Name:: elasticsearch-cluster
 # Recipe:: default
 #
 # Copyright (c) 2016 Dru Goradia, All Rights Reserved.
@@ -7,19 +7,15 @@
 include_recipe 'java'
 include_recipe 'elasticsearch'
 
-elasticsearch_user 'elasticsearch'
-elasticsearch_install 'elasticsearch'
-
-elasticsearch_configure 'elasticsearch' do
-    configuration ({
-      'cluster.name' => 'fd-escluster',
-      'node.name' => node['ec2']['instance_id'],
-      'network.host' => '["_eth0_", "_local_"]',
-      'discovery.zen.ping.multicast.enabled' => false,
-      'discovery.zen.minimum_master_nodes' => 2,
-      'discovery.zen.ping.unicast.hosts' => '["10.68.1.4", "10.68.1.5", "10.68.1.6"]'
-    })
-end
+resources('elasticsearch_configure[elasticsearch]').configuration(
+{
+  'cluster.name' => 'fd-escluster',
+  'node.name' => node['ec2']['instance_id'],
+  'network.host' => '["_eth0_", "_local_"]',
+  'discovery.zen.ping.multicast.enabled' => false,
+  'discovery.zen.minimum_master_nodes' => 2,
+  'discovery.zen.ping.unicast.hosts' => '["10.68.1.4", "10.68.1.5", "10.68.1.6"]'
+})
 
 elasticsearch_plugin 'kopf' do
   url 'lmenezes/elasticsearch-kopf/2.0'
@@ -39,6 +35,4 @@ template '/usr/share/elasticsearch/plugins/kopf/kopf_external_settings.json' do
   )
 end
 
-elasticsearch_service 'elasticsearch' do
-  service_actions [:enable, :start]
-end
+resources('elasticsearch_service[elasticsearch]').service_actions [:enable, :start]

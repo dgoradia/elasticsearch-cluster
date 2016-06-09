@@ -1,9 +1,9 @@
-name 'fender-elasticsearch'
+name 'elasticsearch-cluster'
 maintainer 'Dru Goradia'
 maintainer_email 'dgoradia@users.noreply.github.com'
 license 'all_rights'
-description 'Installs/Configures fender-elasticsearch'
-long_description 'Installs/Configures fender-elasticsearch'
+description 'Installs/Configures elasticsearch-cluster'
+long_description 'Installs/Configures elasticsearch-cluster'
 version '0.1.0'
 
 depends 'java', '~> 1.39.0'

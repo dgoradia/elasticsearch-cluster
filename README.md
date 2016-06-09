@@ -1,5 +1,5 @@
-fender-elasticsearch
-====================
+Elasticsearch Cluster
+=====================
 
 Creates a 3 node Elasticsearch cluster in EC2 within it's own VPC using terraform. The kopf plugin will be installed on each node. These nodes are in a private subnet.
 

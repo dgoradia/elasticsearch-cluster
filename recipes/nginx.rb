@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: fender-elasticsearch
+# Cookbook Name:: elasticsearch-cluster
 # Recipe:: kopf
 #
 # Copyright (c) 2016 Dru Goradia, All Rights Reserved.

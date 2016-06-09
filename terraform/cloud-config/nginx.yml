@@ -21,4 +21,4 @@ runcmd:
   - bundle install
   - berks vendor
   - mv /etc/chef/cookbooks/fd-elasticsearch/berks-cookbooks/* /etc/chef/cookbooks
-  - chef-client -r fender-elasticsearch::nginx
+  - chef-client -r elasticsearch-cluster::nginx
